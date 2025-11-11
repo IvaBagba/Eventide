@@ -1,0 +1,16 @@
+services:
+  postgres:
+    image: postgres:latest
+    container_name: eventide_db
+    environment:
+      POSTGRES_DB: eventide
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 1234
+    ports:
+      - "5432:5432"
+    volumes:
+      - ../../../../../../db/postgres-data:/var/lib/postgresql/data
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
