@@ -1,6 +1,8 @@
 package com.eventideCamp.eventideCamp.Models;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 
@@ -18,15 +20,22 @@ public class Evento {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    //Valores Visibles
+    //Nombre y descripción del evento
+    @NotBlank(message = "El nombre no puede estar vacio")
     private String eventName;
     private String eventDesc;
 
+    //Fecha y hora del evento
+    @NotNull(message = "El campo Fecha no puede estar vacio")
     private LocalDate eventDate;
+    @NotNull(message = "El campo Hora no puede estar vacio")
     private LocalTime eventTime;
 
+    //Lugar del evento
     private String eventLocation;
 
+    //Estados del evento
+    @NotNull(message = "El estado del evento es OBLIGATORIO")
     @Enumerated(EnumType.STRING)
     private EventStatus eventStatus;
 

@@ -3,6 +3,7 @@ package com.eventideCamp.eventideCamp.Controllers;
 import com.eventideCamp.eventideCamp.Dto.EventosDto;
 import com.eventideCamp.eventideCamp.Models.Evento;
 import com.eventideCamp.eventideCamp.Services.EventosService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,7 +26,16 @@ public class EventosController {
     }
 
     @PostMapping("/addEvento")
-    public Evento addEvento(@RequestBody Evento evento) {
-        return eventosService.addEvento(evento);
+    public Evento addEvento(@RequestBody @Valid EventosDto eventoDto) {
+        return eventosService.addEvento(eventoDto);
+    }
+
+    @PutMapping("/modEvento/{id}")
+    public Evento updateEvento(
+            //Variable en la ruta web {id}
+            @PathVariable Long id ,
+            //Body de los cambios del evento (Debe de ser valido)
+            @RequestBody @Valid EventosDto eventoDto) {
+        return eventosService.modEvento(id, eventoDto);
     }
 }

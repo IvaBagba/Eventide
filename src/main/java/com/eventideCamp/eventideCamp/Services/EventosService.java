@@ -3,7 +3,7 @@ package com.eventideCamp.eventideCamp.Services;
 import com.eventideCamp.eventideCamp.Dto.EventosDto;
 import com.eventideCamp.eventideCamp.Models.Evento;
 import com.eventideCamp.eventideCamp.Repo.EventosRepository;
-import lombok.Data;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -41,7 +41,27 @@ public class EventosService {
         return eventosDtos;
     }
 
-    public Evento addEvento(Evento evento) {
+    public Evento addEvento(@Valid EventosDto eventoDto) {
+        Evento evento = new Evento();
+        evento.setEventName(eventoDto.getEventName());
+        evento.setEventDesc(eventoDto.getEventDesc());
+        evento.setEventDate(eventoDto.getEventDate());
+        evento.setEventTime(eventoDto.getEventTime());
+        evento.setEventLocation(eventoDto.getEventLocation());
+        evento.setEventStatus(eventoDto.getEventStatus());
+        evento.setCursosTags(eventoDto.getCursosTags());
         return eventosRepository.save(evento);
+    }
+
+    public Evento modEvento(Long id ,@Valid EventosDto eventoDto) {
+        Evento eventoBase = eventosRepository.findById(id).get();
+        eventoBase.setEventName(eventoDto.getEventName());
+        eventoBase.setEventDesc(eventoDto.getEventDesc());
+        eventoBase.setEventDate(eventoDto.getEventDate());
+        eventoBase.setEventTime(eventoDto.getEventTime());
+        eventoBase.setEventLocation(eventoDto.getEventLocation());
+        eventoBase.setEventStatus(eventoDto.getEventStatus());
+        eventoBase.setCursosTags(eventoDto.getCursosTags());
+        return eventosRepository.save(eventoBase);
     }
 }
